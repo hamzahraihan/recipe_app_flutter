@@ -58,7 +58,19 @@ class MyApp extends StatelessWidget {
           // Define a light and dark color theme. Then, read the user's
           // preferred ThemeMode (light, dark, or system default) from the
           // SettingsController to display the correct theme.
-          theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme()),
+          theme: ThemeData(
+              textTheme: GoogleFonts.montserratTextTheme(),
+              colorScheme: ColorScheme(
+                brightness: Brightness.light,
+                primary: const Color(0xFF1F1F1F),
+                onPrimary: Colors.white,
+                secondary: const Color(0xff03dac6),
+                onSecondary: Colors.black,
+                error: const Color(0xffb00020),
+                onError: Colors.white,
+                surface: Colors.white,
+                onSurface: Colors.black,
+              )),
           darkTheme: ThemeData.dark().copyWith(
               textTheme:
                   GoogleFonts.montserratTextTheme(Typography.whiteMountainView),
