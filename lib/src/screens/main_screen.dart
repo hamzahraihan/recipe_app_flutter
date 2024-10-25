@@ -112,8 +112,15 @@ class _SearchInputState extends State<SearchInput> {
   }
 }
 
-class CategoriesRecipe extends StatelessWidget {
+class CategoriesRecipe extends StatefulWidget {
   const CategoriesRecipe({super.key});
+
+  @override
+  State<CategoriesRecipe> createState() => _CategoriesRecipeState();
+}
+
+class _CategoriesRecipeState extends State<CategoriesRecipe> {
+  int? activeButtonIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -125,18 +132,41 @@ class CategoriesRecipe extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.all(2),
           children: [
-            ElevatedButton(onPressed: () {}, child: Text('All')),
+            _button(0, 'All'),
             SizedBox(width: 8),
-            ElevatedButton(onPressed: () {}, child: Text('Main Course')),
+            _button(1, 'Main Course'),
             SizedBox(width: 8),
-            ElevatedButton(onPressed: () {}, child: Text('Soup')),
+            _button(2, 'Soup'),
             SizedBox(width: 8),
-            ElevatedButton(onPressed: () {}, child: Text('Vegetables')),
+            _button(3, 'Vegetables'),
             SizedBox(width: 8),
-            ElevatedButton(onPressed: () {}, child: Text('Drink')),
+            _button(4, 'Drink'),
             SizedBox(width: 8),
-            ElevatedButton(onPressed: () {}, child: Text('Meat')),
+            _button(5, 'Meat'),
           ],
         ));
+  }
+
+  Widget _button(int index, String label) {
+    final theme = Theme.of(context);
+    final activeColor = theme.colorScheme.primary; // Color for active button
+    final inactiveColor =
+        theme.colorScheme.surface; // Background for inactive button
+    final activeTextColor =
+        theme.colorScheme.onPrimary; // Text color on active button
+    final inactiveTextColor =
+        theme.colorScheme.onSurface; // Text color on inactive button
+
+    final bool isActive = activeButtonIndex == index;
+    return OutlinedButton(
+        style: OutlinedButton.styleFrom(
+            backgroundColor: isActive ? activeColor : inactiveColor,
+            foregroundColor: isActive ? activeTextColor : inactiveTextColor),
+        onPressed: () {
+          setState(() {
+            activeButtonIndex = index;
+          });
+        },
+        child: Text(label));
   }
 }
