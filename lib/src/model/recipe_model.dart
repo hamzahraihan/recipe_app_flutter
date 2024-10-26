@@ -13,8 +13,8 @@ class RecipeData {
     required this.category,
     required this.tags,
     required this.imageUrl,
-    required this.measures,
     required this.ingredients,
+    required this.measures,
   });
 }
 
@@ -59,17 +59,6 @@ List<RecipeData> recipeDataList = [
       imageUrl:
           'https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg',
       measures: [
-        "Plain Flour",
-        "Caster Sugar",
-        "Butter",
-        "Braeburn Apples",
-        "Butter",
-        "Demerara Sugar",
-        "Blackberrys",
-        "Cinnamon",
-        "Ice Cream",
-      ],
-      ingredients: [
         "120g",
         "60g",
         "60g",
@@ -79,5 +68,47 @@ List<RecipeData> recipeDataList = [
         "120g",
         "¼ teaspoon",
         "to serve",
-      ])
+      ],
+      ingredients: [
+        "Plain Flour",
+        "Caster Sugar",
+        "Butter",
+        "Braeburn Apples",
+        "Butter",
+        "Demerara Sugar",
+        "Blackberrys",
+        "Cinnamon",
+        "Ice Cream",
+      ]),
+  RecipeData(
+    name: 'Bread and Butter Pudding',
+    instruction:
+        "Grease a 1 litre/2 pint pie dish with butter.\r\nCut the crusts off the bread. Spread each slice with on one side with butter, then cut into triangles.\r\nArrange a layer of bread, buttered-side up, in the bottom of the dish, then add a layer of sultanas. Sprinkle with a little cinnamon, then repeat the layers of bread and sultanas, sprinkling with cinnamon, until you have used up all of the bread. Finish with a layer of bread, then set aside.\r\nGently warm the milk and cream in a pan over a low heat to scalding point. Don't let it boil.\r\nCrack the eggs into a bowl, add three quarters of the sugar and lightly whisk until pale.\r\nAdd the warm milk and cream mixture and stir well, then strain the custard into a bowl.\r\nPour the custard over the prepared bread layers and sprinkle with nutmeg and the remaining sugar and leave to stand for 30 minutes.\r\nPreheat the oven to 180C/355F/Gas 4.\r\nPlace the dish into the oven and bake for 30-40 minutes, or until the custard has set and the top is golden-brown.",
+    category: 'Dessert',
+    tags: 'Pudding,Brunch',
+    imageUrl:
+        'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg',
+    ingredients: [
+      "butter",
+      "bread",
+      "sultanas",
+      "cinnamon",
+      "milk",
+      "double cream",
+      "eggs",
+      "sugar",
+      "nutmeg",
+    ],
+    measures: [
+      "25g/1oz",
+      "8 thin slices",
+      "50g/2oz",
+      "2 tsp",
+      "350ml/12fl",
+      "50ml/2fl oz",
+      "2 free-range",
+      "25g/1oz",
+      "grated, to taste",
+    ],
+  )
 ];
