@@ -152,9 +152,9 @@ class _CategoriesRecipeState extends State<CategoriesRecipe> {
           children: [
             _button(0, 'All'),
             SizedBox(width: 8),
-            _button(1, 'Main Course'),
+            _button(1, 'Dessert'),
             SizedBox(width: 8),
-            _button(2, 'Soup'),
+            _button(2, 'Beef'),
             SizedBox(width: 8),
             _button(3, 'Vegetables'),
             SizedBox(width: 8),
