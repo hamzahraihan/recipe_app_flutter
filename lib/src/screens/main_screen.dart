@@ -4,12 +4,28 @@ import 'package:recipe_app_flutter/src/settings/settings_controller.dart';
 import 'package:recipe_app_flutter/src/settings/settings_view.dart';
 import 'package:recipe_app_flutter/src/widgets/recipe_slider_widget.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   final SettingsController controller;
 
-  const MainScreen({super.key, required this.controller});
+  const MainScreen({
+    super.key,
+    required this.controller,
+  });
 
   static const routeName = '/';
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  String selectedCategory = 'All';
+
+  void _onSelectedCategory(String category) {
+    setState(() {
+      selectedCategory = category;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +33,22 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => SettingsView(
+                    controller: widget.controller,
+                  ),
+                ),
+              );
+            },
             icon: Icon(Icons.menu),
             iconSize: 34,
           ),
         ],
         leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => SettingsView(
-                  controller: controller,
-                ),
-              ),
-            );
-          },
+          onPressed: () {},
           icon: Icon(Icons.account_circle),
           iconSize: 34,
         ),
@@ -54,7 +70,9 @@ class MainScreen extends StatelessWidget {
             SizedBox(
               height: 5,
             ),
-            CategoriesRecipe(),
+            CategoriesRecipe(
+              onSelectedCategory: _onSelectedCategory,
+            ),
             SizedBox(
               height: 10,
             ),
@@ -65,7 +83,9 @@ class MainScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ),
-            RecipeSliderWidget()
+            RecipeSliderWidget(
+              selectedCategory: selectedCategory,
+            )
           ],
         ),
       ),
@@ -110,7 +130,8 @@ class _SearchInputState extends State<SearchInput> {
 }
 
 class CategoriesRecipe extends StatefulWidget {
-  const CategoriesRecipe({super.key});
+  final ValueChanged<String> onSelectedCategory;
+  const CategoriesRecipe({super.key, required this.onSelectedCategory});
 
   @override
   State<CategoriesRecipe> createState() => _CategoriesRecipeState();
@@ -147,8 +168,6 @@ class _CategoriesRecipeState extends State<CategoriesRecipe> {
   Widget _button(int index, String label) {
     final theme = Theme.of(context);
     final activeColor = theme.colorScheme.primary; // Color for active button
-    final inactiveColor =
-        theme.colorScheme.surface; // Background for inactive button
     final activeTextColor =
         theme.colorScheme.onPrimary; // Text color on active button
     final inactiveTextColor =
@@ -157,12 +176,13 @@ class _CategoriesRecipeState extends State<CategoriesRecipe> {
     final bool isActive = activeButtonIndex == index;
     return OutlinedButton(
         style: OutlinedButton.styleFrom(
-            backgroundColor: isActive ? activeColor : inactiveColor,
+            backgroundColor: isActive ? activeColor : null,
             foregroundColor: isActive ? activeTextColor : inactiveTextColor),
         onPressed: () {
           setState(() {
             activeButtonIndex = index;
           });
+          widget.onSelectedCategory(label);
         },
         child: Text(label));
   }
