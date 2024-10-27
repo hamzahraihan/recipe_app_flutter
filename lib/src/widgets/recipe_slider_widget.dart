@@ -8,7 +8,7 @@ class RecipeSliderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final filteredRecipes = selectedCategory == 'All'
+    final List<RecipeData> filteredRecipes = selectedCategory == 'All'
         ? recipeDataList
         : recipeDataList
             .where((recipe) =>
