@@ -62,14 +62,14 @@ class MyApp extends StatelessWidget {
               textTheme: GoogleFonts.montserratTextTheme(),
               colorScheme: ColorScheme(
                 brightness: Brightness.light,
-                primary: const Color(0xFF1F1F1F),
+                primary: const Color(0xFF313131),
                 onPrimary: Colors.white,
                 secondary: const Color(0xff03dac6),
                 onSecondary: Colors.black,
                 error: const Color(0xffb00020),
                 onError: Colors.white,
                 surface: Colors.white,
-                onSurface: Colors.black,
+                onSurface: const Color(0xFF313131),
               )),
           darkTheme: ThemeData.dark().copyWith(
               textTheme:
