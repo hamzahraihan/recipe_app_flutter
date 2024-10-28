@@ -20,14 +20,15 @@ class RecipeSliderWidget extends StatelessWidget {
       child: filteredRecipes.isNotEmpty
           ? ListView(
               scrollDirection: Axis.horizontal,
-              children: filteredRecipes.map((recipe) {
+              children: filteredRecipes.map((RecipeData recipe) {
                 return GestureDetector(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  DetailScreen()));
+                              builder: (BuildContext context) => DetailScreen(
+                                    recipe: recipe,
+                                  )));
                     },
                     child: Container(
                         height: 500,
