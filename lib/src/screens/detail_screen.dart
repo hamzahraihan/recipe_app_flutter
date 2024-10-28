@@ -8,32 +8,70 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            'Recipe',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        appBar: AppBar(
+            title: Text(
+              'Recipe',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+            actionsPadding: const EdgeInsets.only(right: 16.0),
+            actions: [FavoriteButton()],
+            backgroundColor: Colors.transparent,
+            leadingWidth: 72,
+            leading: Container(
+                margin: const EdgeInsets.only(left: 16.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.grey.withAlpha(20)),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back),
+                  iconSize: 28,
+                ))),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                child: Text(
+                  recipe.name,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.network(
+                        recipe.imageUrl,
+                        height: 200,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      'Ingredients',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
-          centerTitle: true,
-          actionsPadding: const EdgeInsets.only(right: 16.0),
-          actions: [FavoriteButton()],
-          backgroundColor: Colors.transparent,
-          leadingWidth: 72,
-          leading: Container(
-              margin: const EdgeInsets.only(left: 16.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.grey.withAlpha(20)),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back),
-                iconSize: 28,
-              ))),
-      body: Center(
-        child: Text(recipe.name),
-      ),
-    );
+        ));
   }
 }
 
