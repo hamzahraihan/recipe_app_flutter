@@ -109,21 +109,25 @@ class RecipeSliderWidget extends StatelessWidget {
                                                   ),
                                                 ),
                                                 SizedBox(width: 10),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    color: Colors.white12,
+                                                Flexible(
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(8),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      color: Colors.white12,
+                                                    ),
+                                                    child: Text(
+                                                      recipe.tags,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
                                                   ),
-                                                  child: Text(
-                                                    recipe.tags,
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
+                                                )
                                               ],
                                             )
                                           ],
