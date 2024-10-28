@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app_flutter/src/model/recipe_model.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
+  final RecipeData recipe;
+  const DetailScreen({super.key, required this.recipe});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,19 +15,7 @@ class DetailScreen extends StatelessWidget {
           ),
           centerTitle: true,
           actionsPadding: const EdgeInsets.only(right: 16.0),
-          actions: [
-            Container(
-                height: 70,
-                width: 58,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey.withAlpha(20)),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.favorite),
-                  iconSize: 30,
-                )),
-          ],
+          actions: [FavoriteButton()],
           backgroundColor: Colors.transparent,
           leadingWidth: 72,
           leading: Container(
@@ -40,8 +31,43 @@ class DetailScreen extends StatelessWidget {
                 iconSize: 28,
               ))),
       body: Center(
-        child: Text('Hello world!'),
+        child: Text(recipe.name),
       ),
     );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({super.key});
+
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+
+  void _onSelectedFavorite() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 70,
+        width: 58,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            color: Colors.grey.withAlpha(20)),
+        child: IconButton(
+          onPressed: _onSelectedFavorite,
+          icon: Icon(
+            isFavorite ? Icons.favorite : Icons.favorite_border,
+            color: Colors.red,
+          ),
+          iconSize: 30,
+        ));
   }
 }
