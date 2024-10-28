@@ -69,45 +69,42 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
         body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-                  child: Text(
-                    'Get cooking Today!',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                child: Text(
+                  'Get cooking Today!',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SearchInput(
-                  onSearchInput: _onSearchInput,
+              ),
+              SearchInput(
+                onSearchInput: _onSearchInput,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              CategoriesRecipe(
+                onSelectedCategory: _onSelectedCategory,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                child: Text(
+                  '${recipeDataList.length.toString()} Recipe',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
-                  height: 5,
-                ),
-                CategoriesRecipe(
-                  onSelectedCategory: _onSelectedCategory,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                  child: Text(
-                    '${recipeDataList.length.toString()} Recipe',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                RecipeSliderWidget(
-                  selectedCategory: selectedCategory,
-                  searchInput: searchInput,
-                )
-              ],
-            ),
+              ),
+              RecipeSliderWidget(
+                selectedCategory: selectedCategory,
+                searchInput: searchInput,
+              )
+            ],
           ),
         ));
   }
@@ -186,11 +183,11 @@ class _CategoriesRecipeState extends State<CategoriesRecipe> {
             SizedBox(width: 8),
             _button(2, 'Beef'),
             SizedBox(width: 8),
-            _button(3, 'Vegetables'),
+            _button(3, 'Chicken'),
             SizedBox(width: 8),
             _button(4, 'Drink'),
             SizedBox(width: 8),
-            _button(5, 'Meat'),
+            _button(5, 'Coffee'),
           ],
         ));
   }
