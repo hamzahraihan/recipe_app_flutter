@@ -4,16 +4,27 @@ import 'package:recipe_app_flutter/src/screens/detail_screen.dart';
 
 class RecipeSliderWidget extends StatelessWidget {
   final String selectedCategory;
-  const RecipeSliderWidget({super.key, required this.selectedCategory});
+  final String searchInput;
+  const RecipeSliderWidget(
+      {super.key, required this.selectedCategory, required this.searchInput});
+
+  List<RecipeData> getRecipe() {
+    return recipeDataList.where((recipe) {
+      // For "All" category, don't filter by category
+      bool categoryMatch = selectedCategory == 'All' ||
+          recipe.category.toLowerCase() == selectedCategory.toLowerCase();
+
+      // If search is empty, don't filter by search
+      bool searchMatch = searchInput.isEmpty ||
+          recipe.name.toLowerCase().contains(searchInput.toLowerCase());
+
+      return categoryMatch && searchMatch;
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<RecipeData> filteredRecipes = selectedCategory == 'All'
-        ? recipeDataList
-        : recipeDataList
-            .where((recipe) =>
-                recipe.category.toLowerCase() == selectedCategory.toLowerCase())
-            .toList();
+    final List<RecipeData> filteredRecipes = getRecipe();
 
     return SizedBox(
       height: 500,
