@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:recipe_app_flutter/src/model/recipe_model.dart';
 import 'package:recipe_app_flutter/src/settings/settings_controller.dart';
@@ -20,6 +22,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   String selectedCategory = 'All';
+  String searchInput = '';
+  Timer? _debounce;
 
   void _onSelectedCategory(String category) {
     setState(() {
@@ -27,75 +31,97 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  void _onSearchInput(String search) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+    _debounce = Timer(const Duration(milliseconds: 400), () {
+      setState(() {
+        searchInput = search;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => SettingsView(
-                    controller: widget.controller,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => SettingsView(
+                      controller: widget.controller,
+                    ),
                   ),
-                ),
-              );
-            },
-            icon: Icon(Icons.menu),
+                );
+              },
+              icon: Icon(Icons.menu),
+              iconSize: 34,
+            ),
+          ],
+          leading: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.account_circle),
             iconSize: 34,
           ),
-        ],
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.account_circle),
-          iconSize: 34,
         ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-              child: Text(
-                'Get cooking Today!',
-                textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                  child: Text(
+                    'Get cooking Today!',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SearchInput(
+                  onSearchInput: _onSearchInput,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                CategoriesRecipe(
+                  onSelectedCategory: _onSelectedCategory,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                  child: Text(
+                    '${recipeDataList.length.toString()} Recipe',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                RecipeSliderWidget(
+                  selectedCategory: selectedCategory,
+                  searchInput: searchInput,
+                )
+              ],
             ),
-            SearchInput(),
-            SizedBox(
-              height: 5,
-            ),
-            CategoriesRecipe(
-              onSelectedCategory: _onSelectedCategory,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-              child: Text(
-                '${recipeDataList.length.toString()} Recipe',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-            ),
-            RecipeSliderWidget(
-              selectedCategory: selectedCategory,
-            )
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 }
 
 class SearchInput extends StatefulWidget {
-  const SearchInput({super.key});
+  final ValueChanged<String> onSearchInput;
+  const SearchInput({super.key, required this.onSearchInput});
 
   @override
   State<StatefulWidget> createState() => _SearchInputState();
@@ -116,6 +142,9 @@ class _SearchInputState extends State<SearchInput> {
         padding: const EdgeInsets.all(8),
         child: TextField(
           controller: _controller,
+          onChanged: (value) {
+            widget.onSearchInput(_controller.text);
+          },
           decoration: InputDecoration(
               prefixIcon: Icon(
                 Icons.search,
@@ -168,7 +197,8 @@ class _CategoriesRecipeState extends State<CategoriesRecipe> {
 
   Widget _button(int index, String label) {
     final ThemeData theme = Theme.of(context);
-    final Color activeColor = theme.colorScheme.primary; // Color for active button
+    final Color activeColor =
+        theme.colorScheme.primary; // Color for active button
     final Color activeTextColor =
         theme.colorScheme.onPrimary; // Text color on active button
     final Color inactiveTextColor =
