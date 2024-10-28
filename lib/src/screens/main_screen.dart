@@ -167,11 +167,11 @@ class _CategoriesRecipeState extends State<CategoriesRecipe> {
   }
 
   Widget _button(int index, String label) {
-    final theme = Theme.of(context);
-    final activeColor = theme.colorScheme.primary; // Color for active button
-    final activeTextColor =
+    final ThemeData theme = Theme.of(context);
+    final Color activeColor = theme.colorScheme.primary; // Color for active button
+    final Color activeTextColor =
         theme.colorScheme.onPrimary; // Text color on active button
-    final inactiveTextColor =
+    final Color inactiveTextColor =
         theme.colorScheme.onSurface; // Text color on inactive button
 
     final bool isActive = activeButtonIndex == index;
