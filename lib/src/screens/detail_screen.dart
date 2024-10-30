@@ -12,27 +12,29 @@ class DetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            'Recipe',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-          actionsPadding: const EdgeInsets.only(right: 16.0),
-          actions: [FavoriteButton()],
-          backgroundColor: Colors.transparent,
-          leadingWidth: 72,
-          leading: Container(
-              margin: const EdgeInsets.only(left: 16.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.grey.withAlpha(20)),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back),
-                iconSize: 28,
-              ))),
+        scrolledUnderElevation: 0,
+        title: Text(
+          'Recipe',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        actionsPadding: const EdgeInsets.only(right: 16.0),
+        actions: [FavoriteButton()],
+        backgroundColor: Colors.transparent,
+        leadingWidth: 72,
+        leading: Container(
+            margin: const EdgeInsets.only(left: 16.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: Colors.grey.withAlpha(20)),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back),
+              iconSize: 28,
+            )),
+      ),
       body: Stack(
         children: [
           // Background content
