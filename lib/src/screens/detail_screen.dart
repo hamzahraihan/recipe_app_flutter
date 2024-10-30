@@ -74,6 +74,7 @@ class DetailScreen extends StatelessWidget {
 
           // Draggable Bottom Sheet
           DraggableSheet(
+            recipe: recipe,
             draggableColor: theme.colorScheme.secondaryContainer,
             initialChildSize: 0.20,
             minChildSize: 0.20,
@@ -81,9 +82,8 @@ class DetailScreen extends StatelessWidget {
             title: 'Instruction',
           ),
           DraggableSheet(
-            ingredients: recipe.ingredients,
+            recipe: recipe,
             draggableColor: theme.colorScheme.primaryContainer,
-            measures: recipe.measures,
             initialChildSize: 0.10,
             minChildSize: 0.10,
             maxChildSize: 0.3,
