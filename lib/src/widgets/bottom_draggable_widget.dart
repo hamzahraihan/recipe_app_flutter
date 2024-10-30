@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 
 class DraggableSheet extends StatefulWidget {
-  final dynamic recipe;
+  final List<String>? ingredients;
   final List<String>? measures;
   final String title;
   final double initialChildSize;
   final double minChildSize; // Minimum height when collapsed
   final double maxChildSize;
+  final Color draggableColor;
   const DraggableSheet(
       {super.key,
-      required this.recipe,
+      this.ingredients,
       required this.title,
       this.measures,
       required this.initialChildSize,
       required this.maxChildSize,
-      required this.minChildSize});
+      required this.minChildSize,
+      required this.draggableColor});
 
   @override
   State<StatefulWidget> createState() => _DraggableSheetState();
@@ -41,7 +43,9 @@ class _DraggableSheetState extends State<DraggableSheet>
 
     _dragController.addListener(() {
       final newSize = _dragController.size;
-      final scrollPosition = ((newSize - 0.10) / (0.3 - 0.10)).clamp(0.0, 1.0);
+      final scrollPosition = ((newSize - widget.minChildSize) /
+              (widget.maxChildSize - widget.minChildSize))
+          .clamp(0.0, 1.0);
       _animController.animateTo(scrollPosition, duration: Duration.zero);
     });
   }
@@ -60,19 +64,14 @@ class _DraggableSheetState extends State<DraggableSheet>
       minChildSize: widget.minChildSize, // Minimum height when collapsed
       maxChildSize: widget.maxChildSize, // Maximum height when expanded
       snap: true, // Enable snapping
+      snapSizes: [widget.minChildSize, widget.maxChildSize],
       snapAnimationDuration: const Duration(milliseconds: 150),
       controller: _dragController,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, -3),
-              ),
-            ],
+            color: widget.draggableColor,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
           child: SingleChildScrollView(
             controller: scrollController,
@@ -119,21 +118,23 @@ class _DraggableSheetState extends State<DraggableSheet>
                         ],
                       ),
 
-                      SizedBox(height: 16),
                       // Add your ingredients list here
                       ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: widget.recipe
-                            .length, // Replace with your actual ingredients count
-                        itemBuilder: (context, index) {
+                        itemCount: widget.ingredients
+                            ?.length, // Replace with your actual ingredients count
+                        itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             leading: Icon(Icons.circle, size: 8),
                             title: Text(
-                                "${widget.recipe[index]} = ${widget.measures?[index]}"),
+                                "${widget.ingredients?[index]} = ${widget.measures?[index]}"),
                           );
                         },
                       ),
+                      SizedBox(
+                        height: 50,
+                      )
                     ],
                   ),
                 ),
