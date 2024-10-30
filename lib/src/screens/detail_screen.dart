@@ -8,6 +8,8 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -72,13 +74,21 @@ class DetailScreen extends StatelessWidget {
 
           // Draggable Bottom Sheet
           DraggableSheet(
-            recipe: recipe.ingredients,
+            draggableColor: theme.colorScheme.secondaryContainer,
+            initialChildSize: 0.20,
+            minChildSize: 0.20,
+            maxChildSize: 0.6,
+            title: 'Instruction',
+          ),
+          DraggableSheet(
+            ingredients: recipe.ingredients,
+            draggableColor: theme.colorScheme.primaryContainer,
             measures: recipe.measures,
             initialChildSize: 0.10,
             minChildSize: 0.10,
-            maxChildSize: 0.5,
+            maxChildSize: 0.3,
             title: 'Ingredients',
-          )
+          ),
         ],
       ),
     );
