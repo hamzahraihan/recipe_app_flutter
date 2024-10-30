@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app_flutter/src/model/recipe_model.dart';
 
 class DraggableSheet extends StatefulWidget {
-  final List<String>? ingredients;
-  final List<String>? measures;
+  final RecipeData recipe;
   final String title;
   final double initialChildSize;
   final double minChildSize; // Minimum height when collapsed
@@ -10,9 +10,8 @@ class DraggableSheet extends StatefulWidget {
   final Color draggableColor;
   const DraggableSheet(
       {super.key,
-      this.ingredients,
+      required this.recipe,
       required this.title,
-      this.measures,
       required this.initialChildSize,
       required this.maxChildSize,
       required this.minChildSize,
@@ -64,7 +63,6 @@ class _DraggableSheetState extends State<DraggableSheet>
       minChildSize: widget.minChildSize, // Minimum height when collapsed
       maxChildSize: widget.maxChildSize, // Maximum height when expanded
       snap: true, // Enable snapping
-      snapSizes: [widget.minChildSize, widget.maxChildSize],
       snapAnimationDuration: const Duration(milliseconds: 150),
       controller: _dragController,
       builder: (BuildContext context, ScrollController scrollController) {
@@ -117,23 +115,30 @@ class _DraggableSheetState extends State<DraggableSheet>
                           )
                         ],
                       ),
-
+                      SizedBox(
+                        height: 16,
+                      ),
                       // Add your ingredients list here
-                      ListView.builder(
+                      ListView(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: widget.ingredients
-                            ?.length, // Replace with your actual ingredients count
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            leading: Icon(Icons.circle, size: 8),
-                            title: Text(
-                                "${widget.ingredients?[index]} = ${widget.measures?[index]}"),
-                          );
-                        },
+                        children: widget.title == 'Ingredients'
+                            ? widget.recipe.ingredients
+                                .asMap()
+                                .entries
+                                .map((entry) {
+                                final index = entry.key;
+                                final ingredient = entry.value;
+                                return ListTile(
+                                  leading: Icon(Icons.circle, size: 8),
+                                  title: Text(
+                                      '$ingredient = ${widget.recipe.measures[index]}'),
+                                );
+                              }).toList()
+                            : [Text(widget.recipe.instruction)],
                       ),
                       SizedBox(
-                        height: 50,
+                        height: 100,
                       )
                     ],
                   ),
