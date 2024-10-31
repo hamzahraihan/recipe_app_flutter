@@ -127,8 +127,8 @@ class _DraggableSheetState extends State<DraggableSheet>
                                 .asMap()
                                 .entries
                                 .map((entry) {
-                                final index = entry.key;
-                                final ingredient = entry.value;
+                                final int index = entry.key;
+                                final String ingredient = entry.value;
                                 return ListTile(
                                   leading: Icon(Icons.circle, size: 8),
                                   title: Text(
