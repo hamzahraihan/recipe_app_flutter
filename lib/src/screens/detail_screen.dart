@@ -70,7 +70,91 @@ class DetailScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  recipe.description,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
               ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+                side: BorderSide(
+                  color: theme.colorScheme.primaryContainer.withAlpha(80),
+                  width: 1.0,
+                ),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(14.0),
+                height: 230,
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          'Category',
+                          style: TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Text(recipe.category,
+                              style: TextStyle(fontSize: 12.0)),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          'Tags',
+                          style: TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: SizedBox(
+                              width: 150,
+                              child: Text(
+                                recipe.tags,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12.0,
+                                ),
+                                overflow: TextOverflow.clip,
+                              )),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          'Difficulty',
+                          style: TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.bold),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Text(
+                            recipe.difficulty,
+                            style: TextStyle(fontSize: 12.0),
+                            softWrap: true,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
 
@@ -88,7 +172,7 @@ class DetailScreen extends StatelessWidget {
             draggableColor: theme.colorScheme.primaryContainer,
             initialChildSize: 0.10,
             minChildSize: 0.10,
-            maxChildSize: 0.3,
+            maxChildSize: 0.6,
             title: 'Ingredients',
           ),
         ],
