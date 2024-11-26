@@ -18,7 +18,6 @@ class DetailScreen extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        actionsPadding: const EdgeInsets.only(right: 16.0),
         actions: [FavoriteButton()],
         backgroundColor: Colors.transparent,
         leadingWidth: 72,
